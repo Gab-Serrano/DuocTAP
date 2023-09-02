@@ -13,3 +13,6 @@
 # Hacer pull
 
 `git pull origin nombre-de-la-rama`
+
+# Power Shell
+`Set-ExecutionPolicy Unrestricted`
