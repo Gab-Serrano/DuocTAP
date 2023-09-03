@@ -1,9 +1,15 @@
+
+
 .input-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     
 }
+.field-form {
+    width: 17.125rem;
+  }
+
 .button-login{
     --background:#FFC107;
     display: flex;

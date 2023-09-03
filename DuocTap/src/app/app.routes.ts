@@ -1,7 +1,6 @@
-import { Routes } from '@angular/router';
-import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo('/login/login');
 
 export const routes: Routes = [
   
@@ -13,10 +12,17 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
-  },  {
-    path: 'authentication',
-    loadComponent: () => import('./authentication/authentication.page').then( m => m.AuthenticationPage)
   },
-
+  {
+    path: 'cambio-pass',
+    loadComponent: () => import('./cambio-pass/cambio-pass.page').then( m => m.CambioPassPage)
+  },
   
 ];
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes)
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}

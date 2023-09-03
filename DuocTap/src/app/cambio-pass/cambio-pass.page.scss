@@ -1,0 +1,16 @@
+.input-container{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    
+}
+.button-login{
+    --background:#FFC107;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 4vh; 
+}
+.duocFooter{
+    --background:#0C243C;
+}
