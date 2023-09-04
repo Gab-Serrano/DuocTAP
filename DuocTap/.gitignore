@@ -33,6 +33,8 @@ log.txt
 /node_modules
 npm-debug.log
 yarn-error.log
+# Pero no ignorar node_modules/@angular
+!node_modules/@angular/
 
 # IDEs and editors
 .idea/
