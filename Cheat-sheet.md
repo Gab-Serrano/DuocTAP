@@ -16,3 +16,8 @@
 
 # Power Shell
 `Set-ExecutionPolicy Unrestricted`
+
+# Firebase error
+`export type CountSnapshot = lite.AggregateQuerySnapshot<{
+    count: lite.AggregateField<number>;
+}>;`

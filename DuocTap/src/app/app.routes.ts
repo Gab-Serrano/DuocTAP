@@ -1,25 +1,20 @@
-import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo('/auth/login');
 
 export const routes: Routes = [
-  
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
+    redirectTo: '/auth/login',
+    pathMatch: 'full'
+
   },
   {
-    path: 'login',
-    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
-  },
-  {
-    path: 'cambio-pass',
-    loadComponent: () => import('./cambio-pass/cambio-pass.page').then( m => m.CambioPassPage)
-  },
-  {
-    path: 'perfil',
-    loadComponent: () => import('./perfil/perfil.page').then( m => m.PerfilPage)
+    path: 'auth',
+    loadChildren: () => import('./authentication/authentication.routes').then(m => m.routes),
   },
   {
     path: 'contrasena',
@@ -29,11 +24,9 @@ export const routes: Routes = [
     path: 'borrador',
     loadComponent: () => import('./borrador/borrador.page').then( m => m.BorradorPage)
   },
-  
 ];
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
