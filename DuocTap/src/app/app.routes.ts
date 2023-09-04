@@ -17,12 +17,15 @@ export const routes: Routes = [
     path: 'cambio-pass',
     loadComponent: () => import('./cambio-pass/cambio-pass.page').then( m => m.CambioPassPage)
   },
+  {
+    path: 'perfil',
+    loadComponent: () => import('./perfil/perfil.page').then( m => m.PerfilPage)
+  },
   
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
-  ],
-  exports: [RouterModule]
+    RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

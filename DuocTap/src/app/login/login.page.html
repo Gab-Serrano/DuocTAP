@@ -2,7 +2,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-button fill="clear">
-    <ion-icon name="menu-sharp" size="large"></ion-icon>
+      <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -20,7 +20,7 @@
         <ion-list>
           <ion-item>
             <mat-form-field class="field-form">
-              <mat-label class="label-email">Correo electrónico</mat-label>
+              <mat-label aria-label="Email" class="label-email">Correo electrónico</mat-label>
               <input class="input-email" matInput type="email" [(ngModel)]="email">
               <button *ngIf="email" matSuffix mat-icon-button aria-label="Clear" (click)="email=''">
                 <mat-icon>close</mat-icon>
@@ -38,7 +38,7 @@
           </ion-item>
         </ion-list>
         <ion-button class="button-login">Ingresar</ion-button>
-        <a class="olv-contraseña" fill="clear" href="http://localhost:8100/cambio-pass">Olvidé mi contraseña</a>
+        <a class="olv-contraseña" fill="clear" href="http://localhost:8101/cambio-pass">Olvidé mi contraseña</a>
       </ion-col>
     </ion-row>
   </ion-grid>
