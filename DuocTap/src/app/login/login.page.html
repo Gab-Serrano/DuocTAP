@@ -37,8 +37,8 @@
             </mat-form-field>
           </ion-item>
         </ion-list>
-        <ion-button class="button-login">Ingresar</ion-button>
-        <a class="olv-contraseña" fill="clear" href="http://localhost:8101/cambio-pass">Olvidé mi contraseña</a>
+        <ion-button (click)="navigateToPerfil()" class="button-login">Ingresar</ion-button>
+        <ion-button class="button-login" (click)="navigateToCambioPass()">Olvidé mi contraseña</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
