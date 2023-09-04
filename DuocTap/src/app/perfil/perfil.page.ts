@@ -12,7 +12,9 @@ import { RouterModule ,Router } from '@angular/router';
 })
 export class PerfilPage implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
+  navigateToLogin(){
+    this.router.navigate(['/login']);}
 
   ngOnInit() {
   }

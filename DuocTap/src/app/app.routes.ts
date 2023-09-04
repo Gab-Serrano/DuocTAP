@@ -21,6 +21,10 @@ export const routes: Routes = [
     path: 'perfil',
     loadComponent: () => import('./perfil/perfil.page').then( m => m.PerfilPage)
   },
+  {
+    path: 'contrasena',
+    loadComponent: () => import('./contrasena/contrasena.page').then( m => m.ContrasenaPage)
+  },
   
 ];
 @NgModule({
