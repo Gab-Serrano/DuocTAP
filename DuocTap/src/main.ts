@@ -27,30 +27,27 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom(IonicModule.forRoot({})),
     provideRouter(routes),
-    importProvidersFrom(
-      provideFirebaseApp(() =>
-        initializeApp({
-          projectId: '',
-          appId: '',
-          databaseURL: '',
-          storageBucket: '',
-          apiKey: '',
-          authDomain: '',
-          messagingSenderId: '',
-        })
-      )
-    ),
-    importProvidersFrom(
-      provideAuth(() => {
+    importProvidersFrom(provideFirebaseApp(() => initializeApp({
+        projectId: '',
+        appId: '',
+        databaseURL: '',
+        storageBucket: '',
+        apiKey: '',
+        authDomain: '',
+        messagingSenderId: '',
+    }))),
+    importProvidersFrom(provideAuth(() => {
         if (Capacitor.isNativePlatform()) {
-          return initializeAuth(getApp(), {
-            persistence: indexedDBLocalPersistence,
-          });
-        } else {
-          return getAuth();
+            return initializeAuth(getApp(), {
+                persistence: indexedDBLocalPersistence,
+            });
         }
-      })
-    ),
+        else {
+            return getAuth();
+        }
+    })),
     importProvidersFrom(provideFirestore(() => getFirestore())),
-  ],
+    provideAnimations(),
+    provideAnimations()
+],
 });
