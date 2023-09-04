@@ -20,7 +20,7 @@
             email ></ion-input>
           </ion-item>
         </ion-list>
-        <ion-button expand="block" (click)="presentToast('top')" class="button-login">ENVIAR CORREO</ion-button>
+        <ion-button expand="block" (click)="navigateToContrasena()" (click)="presentToast('top')" class="button-login">ENVIAR CORREO</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -28,7 +28,7 @@
 <ion-footer>
   <ion-toolbar class="duocFooter">
     <ion-grid [fixed]="true" >
-      <ion-button class="retorno" fill="clear">
+      <ion-button (click)="navigateToLogin()" class="retorno" fill="clear">
         <ion-icon name="chevron-back-outline"> </ion-icon>
       </ion-button>
     </ion-grid>

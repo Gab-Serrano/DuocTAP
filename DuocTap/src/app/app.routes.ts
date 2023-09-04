@@ -16,6 +16,14 @@ export const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./authentication/authentication.routes').then(m => m.routes),
   },
+  {
+    path: 'contrasena',
+    loadComponent: () => import('./contrasena/contrasena.page').then( m => m.ContrasenaPage)
+  },
+  {
+    path: 'borrador',
+    loadComponent: () => import('./borrador/borrador.page').then( m => m.BorradorPage)
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -9,7 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {NgIf} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'; 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -22,6 +22,13 @@ export class LoginPage implements OnInit {
   
   email: string = '';
   password: string = '';
+  constructor(private router: Router) {}
+  navigateToPerfil() {
+    this.router.navigate(['/perfil']); // Navegar a la página de perfil
+  }
+  navigateToCambioPass() {
+    this.router.navigate(['/cambio-pass']); // Navegar a la página de cambio de contraseña
+  }
   ngOnInit() {  
     
   }
