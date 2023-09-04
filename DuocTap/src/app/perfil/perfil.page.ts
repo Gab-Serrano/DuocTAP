@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule ,Router } from '@angular/router';
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
