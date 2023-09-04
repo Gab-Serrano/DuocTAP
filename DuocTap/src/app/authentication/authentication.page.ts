@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthFormComponent } from './auth-form/auth-form.component';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-authentication',
@@ -36,6 +37,14 @@ export class AuthenticationPage {
       this.pageTitle = 'Restablecer contraseña';
       this.actionButtonText = 'Restablecer';
     }
+  }
+
+  navigateToReset() {
+    window.location.href = 'auth/reset';
+  }
+
+  navigateToSignup() {
+    window.location.href = 'auth/signup';
   }
 
   handleUserCredentials(userCredentials: { email: string; password: string }) {

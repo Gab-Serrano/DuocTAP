@@ -20,6 +20,7 @@
     fill="clear"
     routerLink="/auth/signup"
     *ngIf="url && url !== 'signup'"
+    (click)="navigateToSignup()"
   >
     Create a new account
   </ion-button>
@@ -29,6 +30,7 @@
     fill="clear"
     *ngIf="url && url !== 'reset'"
     routerLink="/auth/reset"
+    (click)="navigateToReset()"
   >
     I forgot my password
   </ion-button>
