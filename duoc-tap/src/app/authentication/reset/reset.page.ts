@@ -12,12 +12,17 @@ import { RouterModule } from '@angular/router';
   imports: [IonicModule, CommonModule, FormsModule, RouterModule, ]
 })
 export class ResetPage implements OnInit {
+  email: string = '';
 
   constructor(private toastController: ToastController) { }
 
+  onSubmit() {
+    localStorage.setItem('email', this.email);
+  }
+
   async presentToast(position: 'top') {
     const toast = await this.toastController.create({
-      message: '!Correo enviado!',
+      message: '¡Correo enviado!',
       duration: 2000,
       position: position,
     });
@@ -25,6 +30,7 @@ export class ResetPage implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
 }

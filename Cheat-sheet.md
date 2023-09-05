@@ -17,7 +17,5 @@
 # Power Shell
 `Set-ExecutionPolicy Unrestricted`
 
-# Firebase error
-`export type CountSnapshot = lite.AggregateQuerySnapshot<{
-    count: lite.AggregateField<number>;
-}>;`
+# JsonServer
+`json-server --watch db.json`
