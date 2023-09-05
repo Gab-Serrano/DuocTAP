@@ -18,9 +18,8 @@
   <ion-button
     expand="block"
     fill="clear"
-    routerLink="/auth/signup"
+    routerLink="/signup"
     *ngIf="url && url !== 'signup'"
-    (click)="navigateToSignup()"
   >
     Create a new account
   </ion-button>
@@ -29,8 +28,7 @@
     expand="block"
     fill="clear"
     *ngIf="url && url !== 'reset'"
-    routerLink="/auth/reset"
-    (click)="navigateToReset()"
+    routerLink="/reset"
   >
     I forgot my password
   </ion-button>

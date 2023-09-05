@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthFormComponent } from './auth-form/auth-form.component';
-import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-authentication',
@@ -21,7 +20,7 @@ import { NavController } from '@ionic/angular';
   ]
 })
 export class AuthenticationPage {
-  private readonly router = inject(Router);
+  private readonly router = inject(Router); 
 
   readonly url: string = this.router.url.split('/').pop() || 'default';
   pageTitle = 'Iniciar sesión'
