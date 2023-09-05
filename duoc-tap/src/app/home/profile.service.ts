@@ -10,7 +10,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 })
 export class ProfileService {
   private apiUrl = 'http://localhost:3000/profile';
-  private apiUrl2 = 'http://localhost:3000/user';
+  private apiUrl2 = 'http://localhost:3000/users';
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 

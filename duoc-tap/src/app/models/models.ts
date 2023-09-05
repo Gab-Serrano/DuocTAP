@@ -1,9 +1,10 @@
 export interface User {
-    userId: number; // este será el enlace a userDetails
+    id?: number;
     username: string;
     password: string;
     token: string;
     rol: string;
+    userId: number; // este será el enlace a userDetails
   }
   
   export interface UserDetails {
