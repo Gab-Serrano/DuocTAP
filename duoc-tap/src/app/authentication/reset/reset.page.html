@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">cambio-pass</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="input-container ion-padding-horizontal">
+        <ion-img src="../../assets/img/logo.png" alt="Logo de DuocUC"></ion-img>
+        <p class="ion-text-center">
+          <ion-text color="medium">Ingrese con el correo registrado con la app. Se le enviará un link para recuperar
+            la
+            contraseña</ion-text>
+        </p>
+        <ion-list class="ion-margin-bottom">
+          <ion-item>
+            <ion-input label="Correo" type="email" placeholder="ini.apellido@duocuc.cl" ngModel email></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-button expand="block" (click)="presentToast('top')"
+          class="button-login">ENVIAR CORREO</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-toolbar class="duocFooter">
+    <ion-grid [fixed]="true">
+      <ion-button class="retorno" fill="clear">
+        <ion-icon name="chevron-back-outline"> </ion-icon>
+      </ion-button>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
