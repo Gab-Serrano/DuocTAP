@@ -1,5 +1,3 @@
-/* SUPABASE TYPES */
-
 export type Json =
   | string
   | number
@@ -446,20 +444,37 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      perfil_detalle: {
+        Row: {
+          carrera: string | null
+          email: string | null
+          id_rol: number | null
+          nombre: string | null
+          rut: string | null
+          sede: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "perfil_id_rol_fkey"
+            columns: ["id_rol"]
+            referencedRelation: "rol"
+            referencedColumns: ["id_rol"]
+          }
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
     }
     Enums: {
       week_day:
-      | "Lunes"
-      | "Martes"
-      | "Miércoles"
-      | "Jueves"
-      | "Viernes"
-      | "Sábado"
-      | "Domingo"
+        | "Lunes"
+        | "Martes"
+        | "Miércoles"
+        | "Jueves"
+        | "Viernes"
+        | "Sábado"
+        | "Domingo"
     }
     CompositeTypes: {
       [_ in never]: never
