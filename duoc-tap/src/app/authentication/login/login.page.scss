@@ -24,3 +24,7 @@
 .duocFooter{
     --background:#0C243C;
 }
+
+.custom-toast::part(message) {
+    font-style: italic !important;
+  }

@@ -3,7 +3,7 @@
     {
       "id": 1,
       "username": "fel.iturrieta@duocuc.cl",
-      "password": "contraseña123",
+      "password": "felitu23#",
       "token": "tu-token-secreto-1",
       "rol": "Estudiante",
       "userId": 1
@@ -31,6 +31,22 @@
       "token": "tu-token-secreto-4",
       "rol": "Estudiante",
       "userId": 4
+    },
+    {
+      "id": 5,
+      "username": "carl.valverde@profesor.duoc.cl",
+      "password": "carval67$",
+      "token": "tu-token-secreto-4",
+      "rol": "Profesor",
+      "userId": 5
+    },
+    {
+      "id": 6,
+      "username": "javi.duran@profesor.duoc.cl",
+      "password": "javdur98%",
+      "token": "tu-token-secreto-6",
+      "rol": "Profesor",
+      "userId": 6
     }
   ],
   "profile": [
@@ -65,6 +81,22 @@
       "apellido": "Jeria",
       "carrera": "Diseño de Vestuario",
       "sede": "Santiago"
+    },
+    {
+      "userId": 5,
+      "rut": "55.555.555-5",
+      "nombre": "Carlos",
+      "apellido": "Valverde",
+      "carrera": "Analista Programador Computacional",
+      "sede": "Viña del Mar"
+    },
+    {
+      "userId": 6,
+      "rut": "66.666.666-6",
+      "nombre": "Javier",
+      "apellido": "Duran",
+      "carrera": "Analista Programador Computacional",
+      "sede": "Viña del Mar"
     }
   ]
 }
