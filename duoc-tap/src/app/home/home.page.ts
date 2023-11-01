@@ -5,8 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import {MatTabsModule} from '@angular/material/tabs';
 import { User, UserDetails } from '../models/models';
-import { ProfileService} from '../home/profile.service';
-import { AuthenticationService } from '../authentication/authentication.service';
+import { ProfileService} from '../services/profile.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-home',
