@@ -11,6 +11,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { AuthenticationService } from '../../services/authentication.service';
 
+/* UPDATE */
+import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -23,10 +26,13 @@ export class LoginPage implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthenticationService, private router: Router) { }
+  constructor(private AuthenticationService: AuthenticationService, private router: Router, private authService: AuthService ) { }
 
   onLogin() {
-    this.authService.login(this.email, this.password).subscribe(isSuccessful => {
+    /* UPDATE */
+    this.authService.login(this.email, this.password);
+
+    this.AuthenticationService.login(this.email, this.password).subscribe(isSuccessful => {
       if (isSuccessful) {
         this.router.navigate(['/home']);
       } else {
