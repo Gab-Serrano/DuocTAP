@@ -10,8 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastController } from '@ionic/angular';
 
-import { AuthenticationService } from '../../services/authentication.service';
-
 /* UPDATE */
 import { AuthService } from '../../services/auth.service';
 
@@ -27,24 +25,15 @@ export class LoginPage implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(private AuthenticationService: AuthenticationService, private router: Router, private authService: AuthService, private toastController: ToastController) { }
+  constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { }
 
   onLogin() {
     if (this.email == '' || this.password == '') {
       this.presentToast('Debe ingresar un usuario y contraseña.');
       return;
     } else {
-      /* UPDATE */
       this.authService.login(this.email, this.password);
-
-      this.AuthenticationService.login(this.email, this.password).subscribe(isSuccessful => {
-        if (isSuccessful) {
-          this.router.navigate(['/home']);
-        } else {
-          alert('Usuario o contraseña incorrectos');
-        }
-      }
-      );
+      this.router.navigate(['/home']);
     }
   }
 

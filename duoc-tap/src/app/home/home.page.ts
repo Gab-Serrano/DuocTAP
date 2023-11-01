@@ -4,15 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
-import { User, UserDetails } from '../models/models';
-import { ProfileService } from '../services/profile.service';
-import { AuthenticationService } from '../services/authentication.service';
-import { forkJoin } from 'rxjs';
 
 /* UPDATE */
 import { PerfilService } from '../services/perfil.service';
 import { AuthService } from '../services/auth.service';
 import { LoadingController } from '@ionic/angular';
+import { Database } from '../models/database.types';
 
 @Component({
   selector: 'app-home',
@@ -22,58 +19,36 @@ import { LoadingController } from '@ionic/angular';
   imports: [IonicModule, CommonModule, FormsModule, RouterModule, MatTabsModule]
 })
 export class HomePage implements OnInit {
-  userDetails: UserDetails | undefined;
-  userCredentials: User | undefined;
+  detallePerfil: Database['public']['Views']['perfil_detalle']['Row'] | undefined;
 
-  constructor(private profServ: ProfileService, private AuthenticationService: AuthenticationService, private perfServ: PerfilService, private authServ: AuthService, private loadingCtrl: LoadingController) { }
+  constructor(private perfServ: PerfilService, private authServ: AuthService, private loadingCtrl: LoadingController) { }
 
   onLogout() {
-    /* UPDATE */
     this.authServ.logout();
-
-    this.AuthenticationService.logout();
   }
 
   async ngOnInit() {
     await this.showLoading();
 
     try {
+      // Obtener el perfil del usuario
       const perfil = await this.perfServ.getUserProfile();
-      console.log("Perfil:", perfil);
 
+      // Verificar si se obtuvo un perfil válido
       if (!perfil) {
-        throw new Error("Unable to fetch user profile");
+        throw new Error("No pudimos obtener tu perfil. Por favor, inténtalo de nuevo más tarde.");
       }
 
-      const token = localStorage.getItem('currentUserToken');
-
-      if (token) {
-        this.profServ.getUserDetails().subscribe(
-          (data) => {
-            this.userDetails = data;
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-
-        this.profServ.getUserCredentials().subscribe(
-          (data) => {
-            this.userCredentials = data;
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
+      // Asignar el perfil obtenido a la variable de clase
+      this.detallePerfil = perfil;
 
     } catch (err: Error | any) {
       console.error("Error:", err.message);
       alert("Error: " + err.message);
       this.onLogout();
-  } finally {
-      await this.hideLoading(); 
-  }
+    } finally {
+      await this.hideLoading();
+    }
   }
 
   async showLoading(message: string = 'Cargando...') {

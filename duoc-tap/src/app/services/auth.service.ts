@@ -51,8 +51,10 @@ export class AuthService {
         }
     }
 
-    isLoggedIn(): boolean {
-        return !!Preferences.get({ key: 'currentUserToken' });
+    async isLoggedIn(): Promise<boolean> {
+        const { value } = await Preferences.get({ key: 'currentUserToken' });
+        console.log('Token Value:', value);
+        return !!value;
     }
 
     async getCurrentUserToken(): Promise<string | null> {

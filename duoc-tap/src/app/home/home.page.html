@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Perfil Estudiante</ion-title>
+    <ion-title *ngIf='detallePerfil?.id_rol === 1'>Perfil Estudiante</ion-title>
+    <ion-title *ngIf='detallePerfil?.id_rol === 2'>Perfil Docente</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,8 +21,8 @@
     <ion-row class="ion-justify-content-center" id="home--personal-info-list">
       <ion-col size="8">
         <div>
-          <ion-title class="ion-text-center" *ngIf="userDetails">{{ userDetails.nombre }} {{ userDetails.apellido }}</ion-title>
-          <p class="ion-text-center" *ngIf="userDetails"> {{ userDetails.rut }}</p>
+          <ion-title class="ion-text-center" *ngIf="detallePerfil">{{ detallePerfil?.nombre }}</ion-title>
+          <p class="ion-text-center" *ngIf="detallePerfil"> {{ detallePerfil?.rut }}</p>
         </div>
       </ion-col>
     </ion-row>
@@ -36,12 +37,13 @@
             <ion-item>
               <ion-icon name="ribbon-outline" slot="start"></ion-icon>
               <ion-label class="home--profile-item-list-text">
-                <div class="ion-text-nowrap" *ngIf="userDetails"> {{ userDetails.carrera }}</div>
+                <div class="ion-text-nowrap" *ngIf='detallePerfil?.id_rol === 1'> {{ detallePerfil?.carrera }}</div>
+                <div class="ion-text-nowrap" *ngIf='detallePerfil?.id_rol === 2'> {{ detallePerfil?.escuela }}</div>
               </ion-label>
             </ion-item>
             <ion-item>
               <ion-icon name="map-outline" slot="start"></ion-icon>
-              <ion-label class="home--profile-item-list-text" *ngIf="userDetails"> {{userDetails.sede}} </ion-label>
+              <ion-label class="home--profile-item-list-text" *ngIf="detallePerfil"> {{detallePerfil?.sede}} </ion-label>
             </ion-item>
           </ion-list>
         </ion-col>
@@ -53,8 +55,8 @@
             <ion-item>
               <ion-icon name="mail-outline" slot="start"></ion-icon>
               <ion-label class="home--profile-item-list-text">
-                <div class="ion-text-nowrap" *ngIf="userCredentials">
-                  {{ userCredentials.username }}
+                <div class="ion-text-nowrap" *ngIf="detallePerfil">
+                  {{ detallePerfil?.email }}
                 </div>
               </ion-label>
             </ion-item>
@@ -86,8 +88,12 @@
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar class="duocFooter" slot="bottom">
-        <ion-tab-button tab="qr">
-          <ion-icon name="qr-code-outline"></ion-icon>
+        <ion-tab-button tab="qr" *ngIf='detallePerfil?.id_rol === 1'>
+          <ion-icon name="qr-code-outline" ></ion-icon>
+          Escanear
+        </ion-tab-button>
+        <ion-tab-button tab="qr" *ngIf='detallePerfil?.id_rol === 2'>
+          <ion-icon name="qr-code-outline" ></ion-icon>
           Escanear
         </ion-tab-button>
         <ion-tab-button tab="profile">

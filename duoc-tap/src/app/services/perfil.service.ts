@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 
+
 const supabase = createClient<Database>(
     environment.supabaseUrl,
     environment.supabaseKey
@@ -18,30 +19,34 @@ const supabase = createClient<Database>(
 })
 export class PerfilService {
     constructor(private authService: AuthService) { }
-    private MAX_RETRIES = 3;
 
+    private MAX_RETRIES = 3;
     async getUserProfile(retries = this.MAX_RETRIES): Promise<any> {
         for (let i = 0; i < retries; i++) {
             try {
                 const id = await this.authService.getCurrentUserId();
-    
+
                 if (!id) {
                     console.error("ID is not valid:", id);
                     return null;
                 }
-    
-                const { data, error } = await supabase.from('perfil_detalle').select('*').eq('id', id).single();
-    
+
+                const { data, error } = await supabase
+                .from('perfil_detalle')
+                .select('*')
+                .eq('id', id)
+                .single();
+
                 if (error) {
                     console.error("Error fetching user profile from Supabase:", error.message);
                     throw error;
                 }
-    
+
                 if (!data) {
                     console.warn("No user profile found for ID:", id);
                     throw new Error("No user profile found");
                 }
-    
+
                 return data;
             } catch (err: Error | any) {
                 if (i === retries - 1) {
