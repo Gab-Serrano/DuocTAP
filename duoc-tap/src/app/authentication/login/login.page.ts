@@ -27,13 +27,17 @@ export class LoginPage implements OnInit {
 
   constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { }
 
-  onLogin() {
+  async onLogin() {
     if (this.email == '' || this.password == '') {
       this.presentToast('Debe ingresar un usuario y contraseña.');
       return;
     } else {
-      this.authService.login(this.email, this.password);
-      this.router.navigate(['/home']);
+      try {
+        await this.authService.login(this.email, this.password);
+        this.router.navigate(['/home']);
+      } catch (error: Error | any) {
+        this.presentToast('Error al iniciar sesión: ' + error.message);
+      }
     }
   }
 

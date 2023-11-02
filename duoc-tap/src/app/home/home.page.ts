@@ -10,6 +10,7 @@ import { PerfilService } from '../services/perfil.service';
 import { AuthService } from '../services/auth.service';
 import { LoadingController } from '@ionic/angular';
 import { Database } from '../models/database.types';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ import { Database } from '../models/database.types';
 })
 export class HomePage implements OnInit {
   detallePerfil: Database['public']['Views']['perfil_detalle']['Row'] | undefined;
-
+  
   constructor(private perfServ: PerfilService, private authServ: AuthService, private loadingCtrl: LoadingController) { }
 
   onLogout() {

@@ -1,24 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Database } from '../models/database.types';
 import { delay } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-/* SUPABASE */
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment';
-
-
-const supabase = createClient<Database>(
-    environment.supabaseUrl,
-    environment.supabaseKey
-)
+import { of, Subscription } from 'rxjs';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PerfilService {
-    constructor(private authService: AuthService) { }
+    private authSubscription: Subscription;
+
+    constructor(private authService: AuthService, @Inject('SupabaseClient') private supabase: SupabaseClient<Database>) {
+        this.authSubscription = this.authService.authChanged.subscribe(() => {
+            this.getUserProfile().then(data => {
+                if (data) {
+                    console.log("Perfil del usuario cargado:", data);
+                }
+            });
+        });
+    }
 
     private MAX_RETRIES = 3;
     async getUserProfile(retries = this.MAX_RETRIES): Promise<any> {
@@ -31,11 +32,11 @@ export class PerfilService {
                     return null;
                 }
 
-                const { data, error } = await supabase
-                .from('perfil_detalle')
-                .select('*')
-                .eq('id', id)
-                .single();
+                const { data, error } = await this.supabase
+                    .from('perfil_detalle')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
 
                 if (error) {
                     console.error("Error fetching user profile from Supabase:", error.message);
@@ -57,5 +58,10 @@ export class PerfilService {
                 await of(null).pipe(delay(1000)).toPromise();
             }
         }
+    }
+
+    ngOnDestroy() {
+        // Cancelar la suscripción para evitar fugas de memoria
+        this.authSubscription.unsubscribe();
     }
 }

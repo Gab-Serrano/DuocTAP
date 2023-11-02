@@ -1,27 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Inject  } from '@angular/core';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
-
-/* SUPABASE */
-import { createClient } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment';
-import { Database } from '../models/database.types'
-import { Capacitor } from '@capacitor/core';
-
-const supabase = createClient<Database>(
-    environment.supabaseUrl,
-    environment.supabaseKey
-)
+import { SupabaseClient } from '@supabase/supabase-js';
+import { Database } from '../models/database.types';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
+    authChanged = new EventEmitter<boolean>();
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, @Inject('SupabaseClient') private supabase: SupabaseClient<Database>) { }
 
     async login(email: string, password: string): Promise<void> {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await this.supabase.auth.signInWithPassword({
             email,
             password
         });
@@ -31,15 +23,18 @@ export class AuthService {
                 Preferences.set({ key: 'currentUserToken', value: data.session.access_token.toString() }),
                 Preferences.set({ key: 'currentUserId', value: data.user.id.toString() }),
                 Preferences.set({ key: 'currentUserEmail', value: data.user.email.toString() })
+                
             ]);
         } else if (error) {
             console.log((error as Error).message);
             throw error;
         }
+
+        this.authChanged.emit(true);
     }
 
     async logout() {
-        const { error } = await supabase.auth.signOut()
+        const { error } = await this.supabase.auth.signOut()
         Preferences.remove({ key: 'currentUserToken'})
         Preferences.remove({ key: 'currentUserId'})
         Preferences.remove({ key: 'currentUserEmail'})
@@ -49,11 +44,11 @@ export class AuthService {
         } else {
             this.router.navigate(['/login'])
         }
+        this.authChanged.emit(false);
     }
 
     async isLoggedIn(): Promise<boolean> {
         const { value } = await Preferences.get({ key: 'currentUserToken' });
-        console.log('Token Value:', value);
         return !!value;
     }
 
