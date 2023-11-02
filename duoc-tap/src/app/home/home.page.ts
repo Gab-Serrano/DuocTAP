@@ -19,6 +19,7 @@ import { Database } from '../models/database.types';
 })
 export class HomePage implements OnInit {
   detallePerfil: Database['public']['Views']['perfil_detalle']['Row'] | undefined;
+  asistencias: any[] | null = [];
   
   constructor(private perfServ: PerfilService, private authServ: AuthService, private loadingCtrl: LoadingController) { }
 
@@ -28,19 +29,11 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     await this.showLoading();
-
     try {
-      // Obtener el perfil del usuario
-      const perfil = await this.perfServ.getUserProfile();
-
-      // Verificar si se obtuvo un perfil válido
-      if (!perfil) {
-        throw new Error("No pudimos obtener tu perfil. Por favor, inténtalo de nuevo más tarde.");
+      this.detallePerfil = await this.perfServ.getUserProfile();
+      if (this.detallePerfil?.id) {
+        this.asistencias = await this.perfServ.getAsistenciaEstudiante(this.detallePerfil.id);
       }
-
-      // Asignar el perfil obtenido a la variable de clase
-      this.detallePerfil = perfil;
-
     } catch (err: Error | any) {
       console.error("Error:", err.message);
       alert("Error: " + err.message);

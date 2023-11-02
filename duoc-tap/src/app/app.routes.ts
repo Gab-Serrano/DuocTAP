@@ -29,8 +29,12 @@ export const routes: Routes = [
     loadComponent: () => import('./attendance/viewDocente/generar-qr/generar-qr.page').then( m => m.GenerarQRPage)
   },
   {
+    path: 'escanear-qr',
+    loadComponent: () => import('./attendance/viewEstudiante/escanear-qr/escanear-qr.page').then( m => m.EscanearQrPage)
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
-  }
+  },
 ];
