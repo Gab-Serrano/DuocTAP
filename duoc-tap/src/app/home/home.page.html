@@ -72,7 +72,18 @@
         </ion-col>
       </ion-row>
     </mat-tab>
-    <mat-tab label="ASISTENCIA"></mat-tab>
+    <mat-tab label="ASISTENCIA">
+      <ion-list>
+        <ion-item *ngFor="let asistencia of asistencias">
+          <ion-label>
+            {{ asistencia.primer_nombre }} {{ asistencia.apellido_paterno }}
+            <p>Fecha: {{ asistencia.fecha_sesion_clase }}</p>
+            <p>Asignatura: {{ asistencia.nom_asignatura }}</p>
+            <p>Estado: {{ asistencia.descripcion }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </mat-tab>
   </mat-tab-group>
 
   <!-- Botón cerrar sesión -->
@@ -91,7 +102,7 @@
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar class="duocFooter" slot="bottom">
-        <ion-tab-button [routerLink]="detallePerfil?.id_rol === 1 ? '/escanearQr' : '/generar-qr'">
+        <ion-tab-button [routerLink]="detallePerfil?.id_rol === 1 ? '/escanear-qr' : '/generar-qr'">
           <ion-icon [name]="detallePerfil?.id_rol === 1 ? 'qr-code-outline' : 'qr-code-outline'"></ion-icon>
           {{ detallePerfil?.id_rol === 1 ? 'Escanear' : 'Generar' }}
         </ion-tab-button>

@@ -4,20 +4,27 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- <ion-content>
+<ion-content>
   <div class="flex-container">
-    <ion-button class="qr-button" (click)="scanQRCode()">Escanear QR</ion-button>
+    <form [formGroup]="asistenciaForm" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-item>
+          <ion-input formControlName="uuid" type="text" label="UUID"></ion-input>
+        </ion-item>
+      </ion-item>
+      <ion-button type="submit" expand="full" class="qr-button">Ingresar Asistencia</ion-button>
+    </form>
   </div>
-</ion-content> -->
+</ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar class="duocFooter" slot="bottom">
-        <!-- <ion-tab-button (click)="goBack()">
+        <ion-tab-button (click)="goBack()">
           <ion-icon name="arrow-back-outline"></ion-icon>
           Regresar
-        </ion-tab-button> -->
+        </ion-tab-button>
 
         <ion-tab-button tab="profile">
           <ion-icon name="person-circle-outline"></ion-icon>

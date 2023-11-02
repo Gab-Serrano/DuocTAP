@@ -64,4 +64,26 @@ export class PerfilService {
         // Cancelar la suscripción para evitar fugas de memoria
         this.authSubscription.unsubscribe();
     }
+
+    async getAsistenciaEstudiante(id: string) {
+        try {
+            const { data, error } = await this.supabase
+                .from('asistencia_por_id')
+                .select(`
+                    id,
+                    primer_nombre,
+                    apellido_paterno,
+                    fecha_sesion_clase,
+                    descripcion,
+                    nom_asignatura
+                `)
+                .eq('id', id);
+    
+            if (error) throw error;
+            return data;
+        } catch (error) {
+            console.error('Error obteniendo asistencia:', error);
+            return null;
+        }
+    }
 }
