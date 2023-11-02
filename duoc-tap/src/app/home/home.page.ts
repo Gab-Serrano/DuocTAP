@@ -5,12 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 
-/* UPDATE */
 import { PerfilService } from '../services/perfil.service';
 import { AuthService } from '../services/auth.service';
 import { LoadingController } from '@ionic/angular';
 import { Database } from '../models/database.types';
-import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-home',

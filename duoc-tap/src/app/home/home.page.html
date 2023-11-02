@@ -1,9 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <div *ngSwitch="detallePerfil?.id_rol">
-      <ion-title *ngSwitchCase="'1'">Perfil Estudiante</ion-title>
-      <ion-title *ngSwitchCase="'2'">Perfil Docente</ion-title>
-    </div>
+    <ion-title *ngIf="detallePerfil?.id_rol === 1">Perfil Estudiante</ion-title>
+    <ion-title *ngIf="detallePerfil?.id_rol === 2">Perfil Docente</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -93,10 +91,11 @@
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar class="duocFooter" slot="bottom">
-        <ion-tab-button tab="qr">
+        <ion-tab-button [routerLink]="detallePerfil?.id_rol === 1 ? '/escanearQr' : '/generar-qr'">
           <ion-icon [name]="detallePerfil?.id_rol === 1 ? 'qr-code-outline' : 'qr-code-outline'"></ion-icon>
           {{ detallePerfil?.id_rol === 1 ? 'Escanear' : 'Generar' }}
-      </ion-tab-button>
+        </ion-tab-button>
+
         <ion-tab-button tab="profile">
           <ion-icon name="person-circle-outline"></ion-icon>
           perfil

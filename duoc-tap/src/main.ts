@@ -28,6 +28,6 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(),
-    {provide: 'SupabaseClient', useValue: supabase},
+    {provide: 'SupabaseClient', useValue: supabase}
 ],
 });
