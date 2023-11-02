@@ -32,5 +32,9 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'escanear-qr',
+    loadComponent: () => import('./attendance/viewEstudiante/escanear-qr/escanear-qr.page').then( m => m.EscanearQrPage)
   }
 ];
