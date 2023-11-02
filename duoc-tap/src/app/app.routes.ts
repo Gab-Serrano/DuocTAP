@@ -25,6 +25,10 @@ export const routes: Routes = [
     loadComponent: () => import('./authentication/reset-password/reset-password.page').then( m => m.ResetPasswordPage)
   },
   {
+    path: 'generar-qr',
+    loadComponent: () => import('./attendance/viewDocente/generar-qr/generar-qr.page').then( m => m.GenerarQRPage)
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',

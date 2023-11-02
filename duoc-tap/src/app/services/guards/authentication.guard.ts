@@ -1,18 +1,19 @@
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot, Router } from '@angular/router';
 import { of } from "rxjs";
-import { AuthenticationService } from '../authentication.service';
+import { AuthService } from "../auth.service";
 
-export const canActivatePath: CanActivateFn = (
+export const canActivatePath: CanActivateFn = async  (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  const authService = inject(AuthenticationService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (!authService.isLoggedIn()) {
-    router.navigate(['/login']); 
-    return of(false);
+  const loggedIn = await authService.isLoggedIn();
+  if (!loggedIn) {
+    router.navigate(['/login']);
+    return false;
   }
-  return of(true);
+  return true;
 };

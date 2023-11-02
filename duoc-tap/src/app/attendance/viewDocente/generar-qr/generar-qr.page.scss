@@ -1,0 +1,30 @@
+.duocFooter{
+    --background:#0C243C;
+    --color:#b5b5b5;
+    
+}
+
+.qr-display {
+    flex: 2; // 2/3 del espacio disponible para el QR
+    display: flex;
+    align-items: center;
+    justify-content: center; // Centrar el QR horizontal y verticalmente
+  }
+  
+  .flex-container {
+    flex: 1; // 1/3 del espacio disponible para el botón
+    display: flex;
+    justify-content: center; // Centrar horizontalmente
+    align-items: center; // Centrar verticalmente
+    
+    .qr-button {
+        width: 18rem; // Ajusta el ancho para que sea más grande
+        background-color: #0C243C; // El color que deseas
+        color: white; // Color de texto en blanco para contraste
+    }
+  }
+  
+  ion-content {
+    display: flex;
+    flex-direction: column; // Disponer hijos (qr-display y flex-container) verticalmente
+  }

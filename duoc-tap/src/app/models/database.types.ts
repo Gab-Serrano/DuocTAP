@@ -107,6 +107,12 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "detalle_estudiante_id_fkey"
+            columns: ["id"]
+            referencedRelation: "perfil_detalle"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "detalle_estudiante_id_jornada_fkey"
             columns: ["id_jornada"]
             referencedRelation: "jornada"
@@ -114,6 +120,31 @@ export interface Database {
           },
           {
             foreignKeyName: "detalle_estudiante_id_sede_fkey"
+            columns: ["id_sede"]
+            referencedRelation: "sede"
+            referencedColumns: ["id_sede"]
+          }
+        ]
+      }
+      escuela: {
+        Row: {
+          id_escuela: number
+          id_sede: number
+          nom_escuela: string
+        }
+        Insert: {
+          id_escuela?: number
+          id_sede: number
+          nom_escuela: string
+        }
+        Update: {
+          id_escuela?: number
+          id_sede?: number
+          nom_escuela?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "escuela_id_sede_fkey"
             columns: ["id_sede"]
             referencedRelation: "sede"
             referencedColumns: ["id_sede"]
@@ -153,6 +184,12 @@ export interface Database {
             foreignKeyName: "estudiante_seccion_id_fkey"
             columns: ["id"]
             referencedRelation: "perfil"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "estudiante_seccion_id_fkey"
+            columns: ["id"]
+            referencedRelation: "perfil_detalle"
             referencedColumns: ["id"]
           },
           {
@@ -220,6 +257,7 @@ export interface Database {
           dv_rut: string
           id: string
           id_comuna: number
+          id_escuela: number
           id_rol: number
           num_rut: number
           primer_nombre: string
@@ -233,6 +271,7 @@ export interface Database {
           dv_rut: string
           id: string
           id_comuna: number
+          id_escuela: number
           id_rol: number
           num_rut: number
           primer_nombre: string
@@ -246,6 +285,7 @@ export interface Database {
           dv_rut?: string
           id?: string
           id_comuna?: number
+          id_escuela?: number
           id_rol?: number
           num_rut?: number
           primer_nombre?: string
@@ -258,6 +298,12 @@ export interface Database {
             columns: ["id_comuna"]
             referencedRelation: "comuna"
             referencedColumns: ["id_comuna"]
+          },
+          {
+            foreignKeyName: "perfil_id_escuela_fkey"
+            columns: ["id_escuela"]
+            referencedRelation: "escuela"
+            referencedColumns: ["id_escuela"]
           },
           {
             foreignKeyName: "perfil_id_fkey"
@@ -321,6 +367,12 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "registro_asistencia_id_fkey"
+            columns: ["id"]
+            referencedRelation: "perfil_detalle"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "registro_asistencia_id_sesion_clase_fkey"
             columns: ["id_sesion_clase"]
             referencedRelation: "sesion_clase"
@@ -379,6 +431,12 @@ export interface Database {
             foreignKeyName: "seccion_id_fkey"
             columns: ["id"]
             referencedRelation: "perfil"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seccion_id_fkey"
+            columns: ["id"]
+            referencedRelation: "perfil_detalle"
             referencedColumns: ["id"]
           }
         ]
@@ -448,12 +506,20 @@ export interface Database {
         Row: {
           carrera: string | null
           email: string | null
+          escuela: string | null
+          id: string | null
           id_rol: number | null
           nombre: string | null
           rut: string | null
           sede: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "perfil_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "perfil_id_rol_fkey"
             columns: ["id_rol"]
