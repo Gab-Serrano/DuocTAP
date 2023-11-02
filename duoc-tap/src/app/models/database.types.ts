@@ -79,19 +79,16 @@ export interface Database {
           id: string
           id_carrera: number
           id_jornada: number
-          id_sede: number
         }
         Insert: {
           id: string
           id_carrera: number
           id_jornada: number
-          id_sede: number
         }
         Update: {
           id?: string
           id_carrera?: number
           id_jornada?: number
-          id_sede?: number
         }
         Relationships: [
           {
@@ -117,12 +114,6 @@ export interface Database {
             columns: ["id_jornada"]
             referencedRelation: "jornada"
             referencedColumns: ["id_jornada"]
-          },
-          {
-            foreignKeyName: "detalle_estudiante_id_sede_fkey"
-            columns: ["id_sede"]
-            referencedRelation: "sede"
-            referencedColumns: ["id_sede"]
           }
         ]
       }
@@ -259,6 +250,7 @@ export interface Database {
           id_comuna: number
           id_escuela: number
           id_rol: number
+          id_sede: number | null
           num_rut: number
           primer_nombre: string
           segundo_nombre: string | null
@@ -273,6 +265,7 @@ export interface Database {
           id_comuna: number
           id_escuela: number
           id_rol: number
+          id_sede?: number | null
           num_rut: number
           primer_nombre: string
           segundo_nombre?: string | null
@@ -287,6 +280,7 @@ export interface Database {
           id_comuna?: number
           id_escuela?: number
           id_rol?: number
+          id_sede?: number | null
           num_rut?: number
           primer_nombre?: string
           segundo_nombre?: string | null
@@ -316,6 +310,12 @@ export interface Database {
             columns: ["id_rol"]
             referencedRelation: "rol"
             referencedColumns: ["id_rol"]
+          },
+          {
+            foreignKeyName: "perfil_id_sede_fkey"
+            columns: ["id_sede"]
+            referencedRelation: "sede"
+            referencedColumns: ["id_sede"]
           }
         ]
       }
@@ -339,19 +339,19 @@ export interface Database {
           id: string
           id_estado: number
           id_registro_asistencia: number
-          id_sesion_clase: number
+          id_sesion_clase: string
         }
         Insert: {
           id: string
           id_estado: number
           id_registro_asistencia?: number
-          id_sesion_clase: number
+          id_sesion_clase: string
         }
         Update: {
           id?: string
           id_estado?: number
           id_registro_asistencia?: number
-          id_sesion_clase?: number
+          id_sesion_clase?: string
         }
         Relationships: [
           {
@@ -474,22 +474,19 @@ export interface Database {
           esta_activa: boolean | null
           fecha_sesion_clase: string
           id_seccion: number
-          id_sesion_clase: number
-          qr_data: string
+          id_sesion_clase: string
         }
         Insert: {
           esta_activa?: boolean | null
           fecha_sesion_clase: string
           id_seccion: number
-          id_sesion_clase?: number
-          qr_data: string
+          id_sesion_clase: string
         }
         Update: {
           esta_activa?: boolean | null
           fecha_sesion_clase?: string
           id_seccion?: number
-          id_sesion_clase?: number
-          qr_data?: string
+          id_sesion_clase?: string
         }
         Relationships: [
           {

@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { PerfilService } from '../../../services/perfil.service';
 import { Preferences } from '@capacitor/preferences';
 import { QRCodeModule } from 'angularx-qrcode';
+import { AttendanceService } from 'src/app/services/attendance.service';
 
 @Component({
   selector: 'app-generar-qr',
@@ -19,7 +20,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 export class GenerarQRPage implements OnInit {
   qrCodeValue: string | null = null;
 
-  constructor(private router: Router, private perfilService: PerfilService) { }
+  constructor(private router: Router, private perfilService: PerfilService, private attServ: AttendanceService) { }
 
   ngOnInit() {
     
@@ -31,9 +32,10 @@ export class GenerarQRPage implements OnInit {
 
     console.log('UUID generado:', this.qrCodeValue);
     
-    const currentUserId = await Preferences.get({ key: 'currentUserId' });
+    const currentUserId = (await Preferences.get({ key: 'currentUserId' })).value;
 
-    // ... Aquí agregarás la lógica para guardar el UUID en tu base de datos
+    this.attServ.guardarSesionClase(this.qrCodeValue, currentUserId?.toString() || '');
+    
 }
 
   goBack() {
