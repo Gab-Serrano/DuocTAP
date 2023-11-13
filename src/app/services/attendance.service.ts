@@ -1,11 +1,9 @@
 import { Injectable, EventEmitter, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Preferences } from '@capacitor/preferences';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { Database } from '../models/database.types';
 import { AuthService } from './auth.service';
-import { delay } from 'rxjs/operators';
-import { of, Subscription } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
