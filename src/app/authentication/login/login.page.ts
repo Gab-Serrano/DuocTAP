@@ -17,6 +17,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup = new FormGroup({});
+  isDarkMode: boolean = false;
 
   constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { }
 
@@ -25,10 +26,14 @@ export class LoginPage implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required)
     });
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.isDarkMode = prefersDark.matches;
+    prefersDark.addEventListener('change', (mediaQuery) => this.updateDarkMode(mediaQuery.matches));
   }
 
   async onLogin() {
-    
+
 
     if (this.loginForm.invalid) {
       this.presentToast('Debe ingresar un usuario y contraseña válidos.');
@@ -46,13 +51,17 @@ export class LoginPage implements OnInit {
   }
 
   async presentToast(message: string) {
-  const toast = await this.toastController.create({
-    message: message,
-    duration: 2000,
-    position: 'top',
-    color: 'danger',
-  });
-  toast.present();
-}
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'top',
+      color: 'danger',
+    });
+    toast.present();
+  }
+
+  updateDarkMode(isDark: boolean) {
+    this.isDarkMode = isDark;
+  }
 
 }

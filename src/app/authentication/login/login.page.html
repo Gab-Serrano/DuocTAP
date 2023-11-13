@@ -2,20 +2,21 @@
   <ion-grid class="wrapper">
     <!-- Logo -->
     <ion-row>
-      <ion-img class="logo" src="../../../assets/img/logo/logo-light.svg" alt="Logo"></ion-img>
+      <ion-img *ngIf="!isDarkMode" class="logo" src="../../../assets/img/logo/logo-light.svg" alt="Logo Modo Claro"></ion-img>
+      <ion-img *ngIf="isDarkMode" class="logo" src="../../../assets/img/logo/logo-dark.svg" alt="Logo Modo Oscuro"></ion-img>
     </ion-row>
     <!-- Formulario login -->
-    <ion-row class="container ion-justify-content-center ion-align-items-center">
+    <ion-row class="ion-justify-content-center ion-align-items-center">
       <form class="wrapper" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-        <ion-row class="container ion-justify-content-center ion-align-items-center">
+        <ion-row class="ion-justify-content-center ion-align-items-center">
           <ion-input class="input-login" label="Correo electrónico" label-placement="floating" type="email" formControlName="email"
             [clearInput]="true" errorText="Correo inválido"></ion-input>
           <ion-input class="input-login" label="Contraseña" label-placement="floating" type="password" formControlName="password"
             [clearInput]="true" errorText="Contraseña inválida"></ion-input>
         </ion-row>
-        <ion-row class="container ion-justify-content-center ion-align-items-center">
+        <ion-row class="router-wrapper ion-justify-content-center ion-align-items-center">
           <ion-button type="submit" classtype="submit" class="button-login"> Ingresar </ion-button>
-          <ion-button class="button-login" routerLink='/reset'> Olvidé mi contraseña</ion-button>
+          <a routerLink='/reset'> Olvidé mi contraseña</a>
         </ion-row>
       </form>
     </ion-row>
