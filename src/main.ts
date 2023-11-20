@@ -1,16 +1,18 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
 
+//HTTPClient
+import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { environment } from './environments/environment';
+
+//Supabase
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Database } from './app/models/database.types';
-import { environment } from './environments/environment';
 
 const supabase: SupabaseClient = createClient<Database>(
   environment.supabaseUrl,

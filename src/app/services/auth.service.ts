@@ -13,6 +13,11 @@ export class AuthService {
     constructor(private router: Router, @Inject('SupabaseClient') private supabase: SupabaseClient<Database>) { }
 
     async login(email: string, password: string): Promise<void> {
+
+        if (!email || !password) {
+            throw new Error('Email and password are required.');
+        }
+
         const { data, error } = await this.supabase.auth.signInWithPassword({
             email,
             password
