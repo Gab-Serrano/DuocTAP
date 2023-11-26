@@ -12,7 +12,7 @@ export class PerfilService {
     private authSubscription: Subscription;
 
     constructor(private authService: AuthService, @Inject('SupabaseClient') private supabase: SupabaseClient<Database>) {
-        this.authSubscription = this.authService.authChanged.subscribe(() => {
+        this.authSubscription = this.authService.authState$.subscribe(() => {
             this.getUserProfile().then(data => {
                 if (data) {
                     console.log("Perfil del usuario cargado:", data);
