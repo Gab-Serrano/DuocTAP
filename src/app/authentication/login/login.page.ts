@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators, FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { RouterModule, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-
-/* UPDATE */
 import { AuthService } from '../../services/auth.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -16,39 +14,46 @@ import { AuthService } from '../../services/auth.service';
   imports: [IonicModule, CommonModule, RouterModule, FormsModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
+  /* Inicializa form para login */
   loginForm: FormGroup = new FormGroup({});
-  isDarkMode: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { }
+  constructor(
+    private router: Router, 
+    private authService: AuthService, 
+    private toastController: ToastController,
+    private theme: ThemeService) { }
 
   ngOnInit() {
+    
+    /* Actualiza formulario para validar email y password */
+    const emailRegex = '^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$';
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required)
+      email: new FormControl('', [Validators.required, Validators.pattern(emailRegex)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
-
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    this.isDarkMode = prefersDark.matches;
-    prefersDark.addEventListener('change', (mediaQuery) => this.updateDarkMode(mediaQuery.matches));
   }
 
+  /* Función que corrobora si los campos son válidos antes de logear */
   async onLogin() {
-
-
     if (this.loginForm.invalid) {
       this.presentToast('Debe ingresar un usuario y contraseña válidos.');
-      return;
-    }
-
-    const { email, password } = this.loginForm.value;
-
-    try {
-      await this.authService.login(email, password);
-      this.router.navigate(['/home']);
-    } catch (error: Error | any) {
-      this.presentToast('Error al iniciar sesión: ' + error.message);
+    }else{
+      await this.login();
     }
   }
+
+  /* Función que logea al usuario */
+  async login() {
+    const { email, password } = this.loginForm.value;
+    this.authService.login(email, password).subscribe({
+        next: (data) => {
+            this.router.navigate(['/home']);
+        },
+        error: (error) => {
+            this.presentToast('Error al iniciar sesión: ' + error.message);
+        }
+    });
+}
 
   async presentToast(message: string) {
     const toast = await this.toastController.create({
@@ -60,8 +65,8 @@ export class LoginPage implements OnInit {
     toast.present();
   }
 
-  updateDarkMode(isDark: boolean) {
-    this.isDarkMode = isDark;
+  isDarkMode(): boolean {
+    return this.theme.getDarkMode();
   }
 
 }

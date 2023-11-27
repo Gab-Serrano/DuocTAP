@@ -2,7 +2,7 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Database } from '../models/database.types';
 import { delay } from 'rxjs/operators';
-import { of, Subscription } from 'rxjs';
+import { lastValueFrom, of, Subscription } from 'rxjs';
 import { SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class PerfilService {
     private authSubscription: Subscription;
 
     constructor(private authService: AuthService, @Inject('SupabaseClient') private supabase: SupabaseClient<Database>) {
-        this.authSubscription = this.authService.authChanged.subscribe(() => {
+        this.authSubscription = this.authService.authState$.subscribe(() => {
             this.getUserProfile().then(data => {
                 if (data) {
                     console.log("Perfil del usuario cargado:", data);
