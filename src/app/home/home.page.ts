@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
-
 import { PerfilService } from '../services/perfil.service';
 import { AuthService } from '../services/auth.service';
 import { LoadingController } from '@ionic/angular';

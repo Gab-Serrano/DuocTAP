@@ -5,6 +5,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { Database } from '../models/database.types';
 import { Observable, catchError, from, of, switchMap, throwError } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -90,5 +91,14 @@ export class AuthService {
     async getCurrentUserEmail(): Promise<string | null> {
         const { value } = await Preferences.get({ key: 'currentUserEmail' });
         return value?.toString() || null;
+    }
+
+    async resetPassword(email: string){
+        const url = environment.updatePasswordURL;
+        await this.supabase.auth.resetPasswordForEmail(email, {redirectTo: url});
+    }
+
+    async updatePassword(newPassword: string){
+        await this.supabase.auth.updateUser({password: newPassword});
     }
 }

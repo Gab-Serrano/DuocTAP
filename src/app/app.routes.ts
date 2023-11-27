@@ -21,8 +21,8 @@ export const routes: Routes = [
     loadComponent: () => import('./authentication/reset/reset.page').then( m => m.ResetPage)
   },
   {
-    path: 'reset-password',
-    loadComponent: () => import('./authentication/reset-password/reset-password.page').then( m => m.ResetPasswordPage)
+    path: 'update-password',
+    loadComponent: () => import('./authentication/updatePassword/updatePassword.page').then( m => m.UpdatePasswordPage)
   },
   {
     path: 'generar-qr',

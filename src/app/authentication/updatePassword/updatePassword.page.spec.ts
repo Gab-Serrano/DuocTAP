@@ -10,13 +10,13 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../../models/models';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.page.html',
-  styleUrls: ['./reset-password.page.scss'],
+  selector: 'app-updatePassword',
+  templateUrl: './updatePassword.page.html',
+  styleUrls: ['./updatePassword.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterModule]
 })
-export class ResetPasswordPage implements OnInit {
+export class UpdatePasswordPage implements OnInit {
   newPassword: string = '';
   confirmNewPassword: string = '';
   apiURL = 'http://localhost:3000/users';

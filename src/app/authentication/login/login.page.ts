@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators, FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { RouterModule, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +17,11 @@ export class LoginPage implements OnInit {
   /* Inicializa form para login */
   loginForm: FormGroup = new FormGroup({});
 
-  /* Almacena estado de pantalla para actualizar modo oscuro */
-  isDarkMode: boolean = false;
-
-  constructor(private router: Router, private authService: AuthService, private toastController: ToastController) { }
+  constructor(
+    private router: Router, 
+    private authService: AuthService, 
+    private toastController: ToastController,
+    private theme: ThemeService) { }
 
   ngOnInit() {
     
@@ -30,14 +31,6 @@ export class LoginPage implements OnInit {
       email: new FormControl('', [Validators.required, Validators.pattern(emailRegex)]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
-
-    /* Actualiza modo de pantalla según estado 
-    Se inicializa en falso. Luego se crea una MediaQueryList con la MediaQuery para el modo oscuro. Posteriormente se corrobora si el modo es oscuro. Se agrega un EventListener para verificar cambios que actualizan el estado de isDarkMode.
-    
-    En el front, se lee el valor de isDarkMode para determinar qué logo mostrar.*/
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    this.isDarkMode = prefersDark.matches;
-    prefersDark.addEventListener('change', (mediaQuery) => this.updateDarkMode(mediaQuery.matches));
   }
 
   /* Función que corrobora si los campos son válidos antes de logear */
@@ -72,8 +65,8 @@ export class LoginPage implements OnInit {
     toast.present();
   }
 
-  updateDarkMode(isDark: boolean) {
-    this.isDarkMode = isDark;
+  isDarkMode(): boolean {
+    return this.theme.getDarkMode();
   }
 
 }
