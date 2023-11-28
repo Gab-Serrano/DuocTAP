@@ -1,0 +1,82 @@
+ion-label > a {
+  text-decoration: none;
+  color: #fff;
+}
+
+ion-menu {
+  --width: 65%;
+}
+
+#main-content {
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 0 0;
+}
+
+.tab-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+ion-list {
+  padding: 1rem;
+}
+
+.tab-wrapper > ion-row {
+  width: 100%;
+}
+
+#image-placeholder img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.duocFooter {
+  --background: #0c243c;
+  --color: #b5b5b5;
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-toolbar {
+    --background: #001426;
+    --color: #fff;
+  }
+  ion-content {
+    --ion-background-color: #001426;
+  }
+  ion-menu > ion-header > ion-toolbar {
+    --background: #001426;
+    --color: #fff;
+  }
+  ion-menu > ion-content > ion-list {
+    --ion-item-background: #0c263f;
+    --color: #fff;
+  }
+  ::ng-deep .mat-mdc-tab .mdc-tab__text-label,
+  ::ng-deep .mat-mdc-tab-link .mdc-tab__text-label {
+    color: rgb(216, 216, 216) !important;
+  }
+  ::ng-deep .mat-mdc-tab-group.mat-success .mat-mdc-tab:not(.mat-mdc-tab-disabled).mat-mdc-tab-label-active .mdc-tab__text-label,
+  ::ng-deep .mat-mdc-tab-group.mat-success .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab-label-active .mdc-tab-indicator__content {
+    color: rgb(216, 216, 216) !important;
+  }
+  .bc-tab {
+    --ion-background-color: none !important;
+  }
+  ion-list {
+    --ion-item-background: none;
+    --color: #fff;
+  }
+}
