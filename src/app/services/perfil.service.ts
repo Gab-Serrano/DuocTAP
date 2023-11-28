@@ -86,4 +86,32 @@ export class PerfilService {
             return null;
         }
     }
+
+    async getHorarioDocenteHoy(idDocente: string) {
+        try {
+            const nombresDias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+            const hoy = new Date();
+            const nombreDiaHoy = nombresDias[hoy.getDay()]; // Obtener el nombre del día de hoy
+    
+            const { data, error } = await this.supabase
+                .from('horario_docente')  // Asegúrate de que el nombre de la vista sea correcto
+                .select(`
+                    dia_semana,
+                    hora_inicio,
+                    hora_fin,
+                    sala,
+                    nom_asignatura,
+                    nom_seccion
+                `)
+                .eq('id', idDocente)  // Suponiendo que la columna para filtrar por docente es 'id_docente'
+                .eq('dia_semana', nombreDiaHoy)  // Filtrando por el nombre del día actual
+                .order('hora_inicio', { ascending: true });  // Ordenando por hora de inicio
+    
+            if (error) throw error;
+            return data;
+        } catch (error) {
+            console.error('Error obteniendo horario del docente para el día de hoy:', error);
+            return null;
+        }
+    }
 }

@@ -3,18 +3,13 @@ import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { Database } from '../models/database.types';
-import { Observable, catchError, from, of, switchMap, throwError } from 'rxjs';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, catchError, from, of, switchMap, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    /* Crea un BehaviorSubject que emite el estado del login a los subscriptores */
-    private authState = new BehaviorSubject<boolean>(false);
-    /* Expone el BehaviorSubject como un observable público */
-    public authState$ = this.authState.asObservable();
 
     constructor(private router: Router, @Inject('SupabaseClient') private supabase: SupabaseClient<Database>) { }
 
@@ -26,7 +21,6 @@ export class AuthService {
                 if (data?.user?.id && data?.session?.access_token && data?.user?.email) {
                     return this.storeUserData(data).pipe(
                         switchMap(() => {
-                            this.authState.next(true);
                             return of(data);
                         })
                     );
@@ -49,23 +43,39 @@ export class AuthService {
         );
     }
 
-    async logout() {
-        const { error } = await this.supabase.auth.signOut()
-        Preferences.remove({ key: 'currentUserToken' })
-        Preferences.remove({ key: 'currentUserId' })
-        Preferences.remove({ key: 'currentUserEmail' })
+    logout(): Observable<any> {
+        return from(this.supabase.auth.signOut()).pipe(
+          switchMap(({ error }) => {
+            if (error) {
+              return throwError(() => new Error(error.message));
+            } else {
+              return from(Promise.all([
+                Preferences.remove({ key: 'currentUserToken' }),
+                Preferences.remove({ key: 'currentUserId' }),
+                Preferences.remove({ key: 'currentUserEmail' }),
 
-        if (error) {
-            console.log(error.message)
-        } else {
-            this.router.navigate(['/login'])
-        }
-        this.authState.next(false);
-    }
+              ]));
+            }
+          }),
+          tap(() => {
+            this.router.navigate(['/login']);
+          }),
+          catchError(error => throwError(() => error))
+        );
+      }
 
-    async isLoggedIn(): Promise<boolean> {
-        const { value } = await Preferences.get({ key: 'currentUserToken' });
-        return !!value;
+    get authState$(): Observable<any> {
+        return from(
+            Preferences.get({ key: 'currentUserToken' })
+        ).pipe(
+            switchMap(({ value }) => {
+                if (value) {
+                    return of(true);
+                } else {
+                    return of(false);
+                }
+            })
+        );
     }
 
     async getCurrentUserToken(): Promise<string | null> {

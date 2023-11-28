@@ -1,41 +1,90 @@
-#home--section-personal-info{
-    margin-bottom: 0;
+ion-label > a{
+  text-decoration: none;
+  color: #fff;
 }
 
-#home--circle-image-placeholder img{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
+ion-menu {
+  --width: 65%;
 }
 
-#home--personal-info-list ion-col{
-    margin-bottom: 0;
+#main-content {
+  height: 100%;
 }
 
-#home--personal-info-list p{
-    margin-bottom: 1rem;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 0 0;
 }
 
-#home--tabs-profile{
-    padding: 0 0.8rem;
+.tab-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
 }
 
-.home--profile-item-list-text{
-    font-size: 0.85rem;
+ion-list {
+  padding: 1rem;
+
 }
 
-.input-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}   
-.barra{
-    
-    color: #0C243C;
+.tab-wrapper > ion-row {
+  width: 100%;
 }
-.duocFooter{
-    --background:#0C243C;
-    --color:#b5b5b5;
-    
+
+#image-placeholder img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.duocFooter {
+  --background: #0c243c;
+  --color: #b5b5b5;
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-toolbar {
+    --background: #001426;
+    --color: #fff;
+  }
+
+  ion-content {
+    --ion-background-color: #001426;
+  }
+
+  ion-menu > ion-header > ion-toolbar {
+    --background: #001426;
+    --color: #fff;
+  }
+
+  ion-menu > ion-content > ion-list {
+    --ion-item-background: #0c263f;
+    --color: #fff;
+  }
+
+  ::ng-deep .mat-mdc-tab .mdc-tab__text-label, 
+  ::ng-deep .mat-mdc-tab-link .mdc-tab__text-label{
+    color: rgb(216, 216, 216) !important;
+  }
+
+  ::ng-deep .mat-mdc-tab-group.mat-success .mat-mdc-tab:not(.mat-mdc-tab-disabled).mat-mdc-tab-label-active .mdc-tab__text-label,
+  ::ng-deep .mat-mdc-tab-group.mat-success .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab-label-active .mdc-tab-indicator__content{
+    color: rgb(216, 216, 216) !important;
+  }
+
+  .bc-tab{
+    --ion-background-color: none !important;
+  }
+
+  ion-list {
+    --ion-item-background: none;
+    --color: #fff;
+  }
+
 }
