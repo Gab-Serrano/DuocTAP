@@ -5,16 +5,14 @@
 </ion-header>
 
 <ion-content>
-  <div class="flex-container">
-    <form [formGroup]="asistenciaForm" (ngSubmit)="onSubmit()">
-      <ion-item>
-        <ion-item>
-          <ion-input formControlName="uuid" type="text" label="UUID"></ion-input>
-        </ion-item>
-      </ion-item>
-      <ion-button type="submit" expand="full" class="qr-button">Ingresar Asistencia</ion-button>
-    </form>
+  <!-- Área para el visor de la cámara -->
+  <div class="camera-preview">
+    <ion-button (click)="barcodeScanner()" expand="full" class="scan-button">
+      Escanear Código QR
+    </ion-button>
   </div>
+  <p>{{scannedOutput}}</p>
+
 </ion-content>
 
 <ion-footer>
@@ -26,15 +24,7 @@
           Regresar
         </ion-tab-button>
 
-        <ion-tab-button tab="profile">
-          <ion-icon name="person-circle-outline"></ion-icon>
-          perfil
-        </ion-tab-button>
-        <ion-tab-button tab="calendar">
-          <ion-icon name="calendar-outline"></ion-icon>
-          Asistencia
-        </ion-tab-button>
-        <ion-tab-button tab="more">
+        <ion-tab-button tab="Más">
           <ion-icon name="menu-outline"></ion-icon>
           more
         </ion-tab-button>

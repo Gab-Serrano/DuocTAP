@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AttendanceService } from 'src/app/services/attendance.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ZBarOptions, ZBar } from '@ionic-native/zbar/ngx';
 
 @Component({
   selector: 'app-escanear-qr',
@@ -16,24 +17,34 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class EscanearQrPage implements OnInit {
-  asistenciaForm: any;
+  optionZbar: any;
+  scannedOutput: any;
 
-  constructor(private router: Router, private fb: FormBuilder, private attServ: AttendanceService) {
-    this.asistenciaForm = this.fb.group({
-      uuid: ['', Validators.required]
-    });
+  constructor(private router: Router, private fb: FormBuilder, private attServ: AttendanceService, private zbarPlugin: ZBar) {
+    this.optionZbar = {
+      flash: 'off',
+      drawSight: false
+    }
+  }
+
+  barcodeScanner(){
+    this.zbarPlugin.scan(this.optionZbar)
+   .then(respone => {
+      console.log(respone);
+      this.scannedOutput = respone;
+   })
+   .catch(error => {
+      alert(error);
+   });
   }
 
   ngOnInit() {
-    this.asistenciaForm = this.fb.group({
-      uuid: ['', Validators.required]
-    });
   }
 
   onSubmit() {
 
-    if (this.asistenciaForm && this.asistenciaForm.valid) {
-      const uuid = this.asistenciaForm.get('uuid')?.value;
+    if (true) {
+      const uuid = this.scannedOutput.get('uuid')?.value;
       if (uuid) {
         this.attServ.guardarAsistencia(uuid);
       }
@@ -45,3 +56,4 @@ export class EscanearQrPage implements OnInit {
     this.router.navigate(['/home']); // O la ruta de tu página principal
   }
 }
+
