@@ -4,6 +4,9 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { ZBar } from '@ionic-native/zbar/ngx';
+
+
 
 //HTTPClient
 import { enableProdMode, importProvidersFrom } from '@angular/core';
@@ -30,6 +33,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(),
+    ZBar,
     {provide: 'SupabaseClient', useValue: supabase}
 ],
 });

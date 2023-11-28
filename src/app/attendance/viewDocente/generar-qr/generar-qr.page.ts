@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, MenuController } from '@ionic/angular';
 
 import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,7 +20,7 @@ import { AttendanceService } from 'src/app/services/attendance.service';
 export class GenerarQRPage implements OnInit {
   qrCodeValue: string | null = null;
 
-  constructor(private router: Router, private perfilService: PerfilService, private attServ: AttendanceService) { }
+  constructor(private router: Router, private perfilService: PerfilService, private attServ: AttendanceService, private menuCtrl: MenuController) { }
 
   ngOnInit() {
     
@@ -40,6 +40,10 @@ export class GenerarQRPage implements OnInit {
 
   goBack() {
     this.router.navigate(['/home']); // O la ruta de tu página principal
+  }
+
+  openMenu() {
+    this.menuCtrl.open('first');
   }
 
 }
