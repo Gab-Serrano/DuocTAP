@@ -4,15 +4,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content >
   <!-- Área para el visor de la cámara -->
-  <div class="camera-preview">
-    <ion-button (click)="barcodeScanner()" expand="full" class="scan-button">
+  <div class="camera-preview wrapper">
+    <ion-button (click)="barcodeScanner()" expand="full" class="scan-button button-form">
       Escanear Código QR
     </ion-button>
   </div>
   <p>{{scannedOutput}}</p>
-
 </ion-content>
 
 <ion-footer>
@@ -32,4 +31,3 @@
     </ion-tabs>
   </ion-toolbar>
 </ion-footer>
-
