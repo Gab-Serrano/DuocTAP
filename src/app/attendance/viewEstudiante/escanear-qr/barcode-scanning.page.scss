@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+}
+
+.button-form {
+  width: 80%;
+  --background: #ffc107;
+}
+
+ion-menu {
+  --width: 65%;
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-toolbar,
+  .duocFooter {
+    --background: #0c263f;
+    --color: #fff;
+  }
+
+  ion-content {
+    --ion-background-color: #001426;
+  }
+
+  ion-menu > ion-content > ion-list {
+    --ion-item-background: #0c263f;
+    --color: #fff;
+  }
+}

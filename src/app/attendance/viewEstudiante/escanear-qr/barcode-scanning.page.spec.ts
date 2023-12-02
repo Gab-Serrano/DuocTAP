@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EscanearQrPage } from './escanear-qr.page';
+import { EscanearQrPage } from './barcode-scanning.page';
 
-describe('EscanearQrPage', () => {
-  let component: EscanearQrPage;
-  let fixture: ComponentFixture<EscanearQrPage>;
+describe('BarcodeScanningPage', () => {
+  let component: BarcodeScanningPage;
+  let fixture: ComponentFixture<BarcodeScanningPage>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(EscanearQrPage);
+    fixture = TestBed.createComponent(BarcodeScanningPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
