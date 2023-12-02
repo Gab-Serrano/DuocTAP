@@ -1,7 +1,7 @@
 {
-  "name": "duoctap-test",
+  "name": "DuocTAP",
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular-standalone"
+  "type": "angular"
 }
