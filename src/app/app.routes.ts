@@ -30,7 +30,7 @@ export const routes: Routes = [
   },
   {
     path: 'escanear-qr',
-    loadComponent: () => import('./attendance/viewEstudiante/escanear-qr/escanear-qr.page').then( m => m.EscanearQrPage)
+    loadComponent: () => import('./attendance/viewEstudiante/escanear-qr/barcode-scanning.page').then( m => m.BarcodeScanningPage)
   },
   {
     path: '**',
