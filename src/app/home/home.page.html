@@ -51,8 +51,9 @@
               <p>Información académica</p>
               <ion-item>
                 <ion-icon name="ribbon-outline" slot="start"></ion-icon>
-                <ion-label >
-                  <ng-container class="ion-text-wrap" *ngIf="detallePerfil?.id_rol === 1; else docenteInfo">{{ detallePerfil?.carrera
+                <ion-label>
+                  <ng-container class="ion-text-wrap" *ngIf="detallePerfil?.id_rol === 1; else docenteInfo">{{
+                    detallePerfil?.carrera
                     }}</ng-container>
                   <ng-template #docenteInfo>
                     <div class="ion-text-nowrap">{{ detallePerfil?.escuela }}</div>
@@ -86,18 +87,17 @@
           </ion-col>
         </ion-row>
       </mat-tab>
-
-      <mat-tab *ngIf="detallePerfil?.id_rol === 1" label="ASISTENCIA">
-        <ion-list>
-          <ion-item *ngFor="let asistencia of asistencias">
-            <ion-label>
-              {{ asistencia.nom_asignatura }}
-              <p>Fecha: {{ asistencia.fecha_sesion_clase }}</p>
-              <p>Estado: {{ asistencia.descripcion }}</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </mat-tab>
+        <mat-tab *ngIf="detallePerfil?.id_rol === 1" label="ASISTENCIA">
+          <ion-list>
+            <ion-item *ngFor="let asistencia of asistencias">
+              <ion-label>
+                {{ asistencia.nom_asignatura }}
+                <p>Fecha: {{ asistencia.fecha_sesion_clase }}</p>
+                <p>Estado: {{ asistencia.descripcion }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </mat-tab>
       <mat-tab *ngIf="detallePerfil?.id_rol === 2" label="CLASES">
         <ion-list>
           <ion-item *ngFor="let horario of horarios">

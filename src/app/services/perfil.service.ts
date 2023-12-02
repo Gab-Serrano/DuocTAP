@@ -4,12 +4,15 @@ import { Database } from '../models/database.types';
 import { delay } from 'rxjs/operators';
 import { lastValueFrom, of, Subscription } from 'rxjs';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PerfilService {
     private authSubscription: Subscription;
+    private asistenciasSubject = new BehaviorSubject<any[]>([]);
+public asistencias$ = this.asistenciasSubject.asObservable();
 
     constructor(private authService: AuthService, @Inject('SupabaseClient') private supabase: SupabaseClient<Database>) {
         this.authSubscription = this.authService.authState$.subscribe(() => {
@@ -80,6 +83,7 @@ export class PerfilService {
                 .eq('id', id);
     
             if (error) throw error;
+            this.asistenciasSubject.next(data);
             return data;
         } catch (error) {
             console.error('Error obteniendo asistencia:', error);

@@ -8,7 +8,7 @@ import {
   LensFacing,
 } from '@capacitor-mlkit/barcode-scanning';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
-
+import { PerfilService } from '../../../services/perfil.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController } from '@ionic/angular';
@@ -20,6 +20,9 @@ import { AlertController } from '@ionic/angular';
 import { AuthService } from '../../../services/auth.service';
 
 import { LoadingController } from '@ionic/angular';
+import { Database } from 'src/app/models/database.types';
+import { EnvironmentInjector, inject } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-barcode-scanning',
@@ -42,9 +45,13 @@ export class BarcodeScanningPage implements OnInit {
   public isSupported = false;
   public isPermissionGranted = false;
 
-  constructor(private router: Router, private fb: FormBuilder, private attServ: AttendanceService, private alertController: AlertController, private menuCtrl: MenuController, private authServ: AuthService, private readonly dialogService: DialogService, private readonly ngZone: NgZone, private loadingController: LoadingController) {
+  constructor(private router: Router, private fb: FormBuilder, private attServ: AttendanceService, private alertController: AlertController, private menuCtrl: MenuController, private authServ: AuthService, private readonly dialogService: DialogService, private readonly ngZone: NgZone, private loadingController: LoadingController, private perfServ: PerfilService, private cdr: ChangeDetectorRef) {
 
   }
+  detallePerfil: Database['public']['Views']['perfil_detalle']['Row'] | undefined;
+  asistencias: any[] | null = [];
+  horarios: any[] | null = [];
+  public environmentInjector = inject(EnvironmentInjector);
 
   public async ngOnInit(): Promise<void> {
     console.log('ngOnInit: Iniciando BarcodeScanningPage');
@@ -63,7 +70,7 @@ export class BarcodeScanningPage implements OnInit {
     const permissionStatus = await BarcodeScanner.checkPermissions();
     console.log('Estado de los permisos:', permissionStatus.camera);
     if (permissionStatus.camera !== 'granted') {
-        await BarcodeScanner.requestPermissions();
+      await BarcodeScanner.requestPermissions();
     }
 
     BarcodeScanner.isSupported().then((result) => {
@@ -102,7 +109,7 @@ export class BarcodeScanningPage implements OnInit {
     // Comprueba si el módulo está instalado y si no, instálalo
     const isModuleInstalled = await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
     console.log('Módulo del escáner de Google instalado:', isModuleInstalled);
-  
+
     if (!isModuleInstalled) {
       await BarcodeScanner.installGoogleBarcodeScannerModule();
       console.log('Módulo del escáner de Google instalado correctamente');
@@ -137,15 +144,33 @@ export class BarcodeScanningPage implements OnInit {
       const formats = this.formGroup.get('formats')?.value || [];
       const { barcodes } = await BarcodeScanner.scan({ formats });
       this.scannedBarcode = barcodes[0] || null;
+
+      try {
+        if (this.scannedBarcode == null) {
+          alert("Error al registrar asistencia");
+          return
+        } else {
+          const UUID = this.scannedBarcode.displayValue;
+          this.attServ.guardarAsistencia(UUID);
+        }
+        alert("Asistencia registrada con éxito"
+        );
+        this.navegarYCargarAsistencias();
+
+
+      } catch (error) {
+        console.log(error);
+        alert("Error al registrar asistencia");
+      }
     } catch (error: any) {
       if (error.message.includes('Google Barcode Scanner Module is not available')) {
-          await this.installGoogleBarcodeScannerModule();
-          // Opcionalmente, reintenta el escaneo después de la instalación
+        await this.installGoogleBarcodeScannerModule();
+        // Opcionalmente, reintenta el escaneo después de la instalación
       } else {
-          console.error('Error durante el escaneo', error);
+        console.error('Error durante el escaneo', error);
       }
+    }
   }
-}
 
   public async openSettings(): Promise<void> {
     await BarcodeScanner.openSettings();
@@ -154,16 +179,6 @@ export class BarcodeScanningPage implements OnInit {
   public async requestPermissions(): Promise<void> {
     await BarcodeScanner.requestPermissions();
   }
-
-  private async handleGoogleModuleNotAvailable(): Promise<void> {
-    try {
-      await BarcodeScanner.installGoogleBarcodeScannerModule();
-      console.log('Módulo del escáner de Google instalado correctamente, reintente el escaneo');
-    } catch (installError) {
-      console.error('Error al instalar el módulo del escáner de Google', installError);
-    }
-  }
-
 
   onSubmit() {
 
@@ -208,19 +223,40 @@ export class BarcodeScanningPage implements OnInit {
 
   public async installGoogleBarcodeScannerModule(): Promise<void> {
     const loading = await this.loadingController.create({
-        message: 'Instalando módulo del escáner...',
-        // Otras opciones de configuración si es necesario
+      message: 'Instalando módulo del escáner...',
+      // Otras opciones de configuración si es necesario
     });
     await loading.present();
 
     try {
-        await BarcodeScanner.installGoogleBarcodeScannerModule();
-        console.log('Módulo del escáner de Google instalado correctamente');
+      await BarcodeScanner.installGoogleBarcodeScannerModule();
+      console.log('Módulo del escáner de Google instalado correctamente');
     } catch (error) {
-        console.error('Error al instalar el módulo del escáner de Google', error);
+      console.error('Error al instalar el módulo del escáner de Google', error);
     } finally {
-        await loading.dismiss();
+      await loading.dismiss();
     }
-}
+  }
+
+  async navegarYCargarAsistencias() {
+    await this.router.navigate(['/home']);
+        window.location.reload();
+  }
+
+  async showLoading(message: string = 'Cargando...') {
+    const loading = await this.loadingController.create({
+      message,
+      spinner: 'crescent'
+    });
+    await loading.present();
+  }
+
+
+  async hideLoading() {
+    await this.loadingController.dismiss();
+  }
+
+
+
 }
 
